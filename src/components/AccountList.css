@@ -1,0 +1,532 @@
+.account-list-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* 工具栏 */
+.account-list-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 搜索框 */
+.search-box {
+    position: relative;
+    width: 160px;
+    transition: width 0.2s ease;
+}
+
+.search-box:focus-within {
+    width: 200px;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-box input:focus {
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* 筛选按钮组 */
+.filter-group {
+    display: flex;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn.active {
+    color: var(--primary-color);
+    background: rgba(88, 166, 255, 0.15);
+}
+
+.filter-count {
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+}
+
+.filter-btn.active .filter-count {
+    background: rgba(88, 166, 255, 0.2);
+    color: var(--primary-color);
+}
+
+.toolbar-spacer {
+    flex: 1;
+}
+
+/* 自定义复选框 */
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.custom-checkbox:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.custom-checkbox:checked {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.custom-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0d1117;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+
+/* 表头 */
+.account-table-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 表格主体 */
+.account-table-body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.account-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.15s ease;
+}
+
+.account-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.account-row.selected {
+    background: rgba(88, 166, 255, 0.08);
+}
+
+.account-row.current {
+    background: rgba(63, 185, 80, 0.08);
+}
+
+/* 列宽 */
+.col-checkbox {
+    width: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.col-drag {
+    width: 24px;
+    flex-shrink: 0;
+}
+
+.drag-handle {
+    color: var(--text-muted);
+    cursor: grab;
+    font-size: 10px;
+    letter-spacing: -2px;
+}
+
+.col-email {
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    padding-right: 16px;
+}
+
+.email-text {
+    font-size: 13px;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.badge {
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.badge.current {
+    background: rgba(63, 185, 80, 0.2);
+    color: var(--success-color);
+}
+
+.badge.plan {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+}
+
+.badge.invalid {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    cursor: help;
+}
+
+.account-row.invalid {
+    background: rgba(239, 68, 68, 0.08);
+    border-left: 3px solid #ef4444;
+}
+
+.col-quota-merged {
+    width: 380px;
+    flex-shrink: 0;
+    padding-right: 16px;
+}
+
+.quota-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 2px 0;
+}
+
+.quota-mini-card {
+    position: relative;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.quota-mini-card.empty {
+    justify-content: center;
+    opacity: 0.5;
+}
+
+.quota-mini-bg {
+    position: absolute;
+    inset: 0;
+    left: 0;
+    height: 100%;
+    opacity: 0.15;
+    transition: width 0.5s ease;
+}
+
+.quota-mini-bg.green {
+    background: var(--success-color);
+}
+
+.quota-mini-bg.orange {
+    background: var(--warning-color);
+}
+
+.quota-mini-bg.red {
+    background: var(--danger-color);
+}
+
+.quota-mini-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: var(--font-mono, monospace);
+}
+
+.quota-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 40px;
+}
+
+.quota-time {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.quota-time.success {
+    color: var(--success-color);
+}
+
+.quota-time.warning {
+    color: var(--warning-color);
+}
+
+.quota-time.neutral {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.icon-tiny {
+    width: 10px;
+    height: 10px;
+}
+
+.quota-percent {
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 32px;
+    text-align: right;
+}
+
+.quota-percent.green {
+    color: var(--success-color);
+}
+
+.quota-percent.orange {
+    color: var(--warning-color);
+}
+
+.quota-percent.red {
+    color: var(--danger-color);
+}
+
+.quota-empty {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+
+.col-time {
+    width: 110px;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.col-actions {
+    width: 140px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: var(--text-muted);
+}
+
+.action-btn:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.5);
+    color: #60a5fa;
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.action-btn.refresh:hover:not(:disabled) {
+    background: rgba(63, 185, 80, 0.15);
+    border-color: rgba(63, 185, 80, 0.5);
+    color: var(--success-color);
+}
+
+.action-btn.switch:hover:not(:disabled) {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.5);
+    color: #a78bfa;
+}
+
+.action-btn.delete:hover:not(:disabled) {
+    background: rgba(248, 81, 73, 0.15);
+    border-color: rgba(248, 81, 73, 0.5);
+    color: var(--danger-color);
+}
+
+/* 图标样式 */
+.icon {
+    width: 16px;
+    height: 16px;
+}
+
+.icon.spinning {
+    animation: spin 0.8s linear infinite;
+}
+
+
+
+/* 底部统计 */
+.account-list-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.selected-info {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* 刷新按钮 */
+.btn-refresh {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    font-size: 12px;
+    font-family: inherit;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.btn-refresh:hover:not(:disabled) {
+    background: rgba(63, 185, 80, 0.15);
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.btn-refresh:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: var(--success-color);
+    background: rgba(63, 185, 80, 0.1);
+    border-color: var(--success-color);
+}
+
+
+
+/* 小型加载动画 */
+.spinner-tiny {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+.refresh-icon {
+    font-size: 16px;
+    display: inline-block;
+}
+
+.refresh-icon.spinning {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

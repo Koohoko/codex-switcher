@@ -1,0 +1,189 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboard-greeting h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* 双栏布局 */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.dashboard-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.dashboard-card .card-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dashboard-card .card-icon {
+    font-size: 14px;
+}
+
+/* 当前账号 */
+.current-account-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.account-info .email-icon {
+    color: var(--text-muted);
+}
+
+.account-info .email {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.account-info .plan-badge {
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+}
+
+/* 失效状态 */
+.dashboard-card.invalid {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.invalid-badge {
+    margin-left: auto;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    cursor: help;
+}
+
+.no-account {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+}
+
+/* 最佳账号推荐 */
+.best-accounts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.best-account-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.account-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.label-text {
+    font-size: 11px;
+    color: var(--success-color);
+}
+
+.account-email {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.quota-badge {
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 6px;
+    background: rgba(63, 185, 80, 0.2);
+    color: var(--success-color);
+}
+
+.no-recommendation {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 20px 0;
+}
+
+/* 快速链接 */
+.dashboard-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.link-card:hover {
+    border-color: var(--primary-color);
+    background: rgba(88, 166, 255, 0.05);
+}
+
+.link-arrow,
+.link-icon {
+    color: var(--primary-color);
+}
