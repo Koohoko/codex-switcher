@@ -300,12 +300,22 @@ async fn get_quota_by_id(state: tauri::State<'_, AppState>, id: String) -> Resul
         let mut store = state.store.lock().map_err(|e| e.to_string())?;
         if let Some(account) = store.accounts.get_mut(&id) {
             
-            // 更新 auth_json 中的 access_token
+            // 更新 auth_json 中的 Token 信息
             if let Some(obj) = account.auth_json.as_object_mut() {
                 if let Some(tokens_obj) = obj.get_mut("tokens").and_then(|v| v.as_object_mut()) {
                     tokens_obj.insert("access_token".to_string(), serde_json::json!(tokens.access_token));
+                    
                     if let Some(rt) = &tokens.refresh_token {
                         tokens_obj.insert("refresh_token".to_string(), serde_json::json!(rt));
+                    }
+                    
+                    if let Some(it) = &tokens.id_token {
+                        tokens_obj.insert("id_token".to_string(), serde_json::json!(it));
+                    }
+                    
+                    if let Some(expires_in) = tokens.expires_in {
+                        let expires_at = (chrono::Utc::now() + chrono::Duration::seconds(expires_in as i64)).to_rfc3339();
+                        tokens_obj.insert("expires_at".to_string(), serde_json::json!(expires_at));
                     }
                 }
             }
