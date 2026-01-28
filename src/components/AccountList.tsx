@@ -22,6 +22,7 @@ interface AccountListProps {
     onSwitch: (id: string) => void;
     onDelete: (id: string) => void;
     onUpdateSettings: (settings: AppSettings) => void;
+    onRefreshComplete?: () => void;  // 刷新完成后的回调
 }
 
 export function AccountList({
@@ -31,6 +32,7 @@ export function AccountList({
     onSwitch,
     onDelete,
     onUpdateSettings,
+    onRefreshComplete,
 }: AccountListProps) {
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const [refreshingIds, setRefreshingIds] = useState<Set<string>>(new Set());
@@ -172,6 +174,9 @@ export function AccountList({
                 console.log('检测到无效账号:', id); // Debug
                 setInvalidIds(prev => new Set(prev).add(id));
             }
+
+            // 刷新成功后，通知父组件重新加载账号列表（更新 updated_at）
+            onRefreshComplete?.();
         } catch (err) {
             const errStr = String(err);
             console.error('刷新配额失败:', errStr);

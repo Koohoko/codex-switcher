@@ -5,9 +5,10 @@
 use crate::account::AccountStore;
 use std::sync::{Arc, Mutex};
 use tokio::time::{interval, Duration};
+use tauri::Emitter;
 
 /// 启动后台 Token 刷新调度器
-pub fn start(store: Arc<Mutex<AccountStore>>) {
+pub fn start(store: Arc<Mutex<AccountStore>>, app_handle: tauri::AppHandle) {
     // 使用 Tauri 的 async runtime 而不是直接 tokio::spawn
     // 因为在 setup() 中调用时 Tokio runtime 可能尚未完全初始化
     tauri::async_runtime::spawn(async move {
@@ -57,6 +58,9 @@ pub fn start(store: Arc<Mutex<AccountStore>>) {
             
             if refreshed_count > 0 {
                 println!("[Scheduler] 本轮刷新了 {} 个账号的 Token", refreshed_count);
+                
+                // 发送事件通知前端更新账号列表
+                let _ = app_handle.emit("accounts-updated", ());
             } else {
                 println!("[Scheduler] 所有 Token 状态良好，无需刷新");
             }

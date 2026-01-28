@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
+import { listen } from '@tauri-apps/api/event';
 import { useAccounts } from './hooks/useAccounts';
 import { useUsage } from './hooks/useUsage';
 import { AddAccountModal } from './components/AddAccountModal';
@@ -38,6 +39,18 @@ function App() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const currentAccount = accounts.find(a => a.id === currentId) || null;
+
+  // 监听后台调度器的账号更新事件
+  useEffect(() => {
+    const unlisten = listen('accounts-updated', () => {
+      console.log('[Frontend] 收到后台刷新通知，重新加载账号列表');
+      refresh();
+    });
+
+    return () => {
+      unlisten.then(f => f());
+    };
+  }, [refresh]);
 
   // 切换账号后刷新用量
   const handleSwitch = async (id: string) => {
@@ -178,6 +191,7 @@ function App() {
             onSwitch={handleSwitch}
             onDelete={deleteAccount}
             onUpdateSettings={updateSettings}
+            onRefreshComplete={refresh}
           />
         ) : (
           <Settings />

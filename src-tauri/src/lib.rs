@@ -388,7 +388,7 @@ pub fn run() {
             // 启动后台调度器
             let store = app.state::<AppState>().store.lock().unwrap().clone();
             let store_arc = std::sync::Arc::new(std::sync::Mutex::new(store));
-            scheduler::start(store_arc);
+            scheduler::start(store_arc, app.handle().clone());
             
             Ok(())
         })
